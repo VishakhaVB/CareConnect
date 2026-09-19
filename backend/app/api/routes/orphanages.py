@@ -23,6 +23,12 @@ def create_orphanage_profile(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    if current_user.role == "donor":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Donors cannot create orphanage profiles",
+        )
+
     existing = db.query(Orphanage).filter(Orphanage.user_id == current_user.id).first()
     if existing:
         raise HTTPException(
@@ -58,6 +64,12 @@ def get_my_orphanage(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    if current_user.role == "donor":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Donors cannot perform orphanage-owner operations",
+        )
+
     orphanage = db.query(Orphanage).filter(Orphanage.user_id == current_user.id).first()
     if not orphanage:
         raise HTTPException(
@@ -73,6 +85,12 @@ def update_my_orphanage(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    if current_user.role == "donor":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Donors cannot perform orphanage-owner operations",
+        )
+
     orphanage = db.query(Orphanage).filter(Orphanage.user_id == current_user.id).first()
     if not orphanage:
         raise HTTPException(

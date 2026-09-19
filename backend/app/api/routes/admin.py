@@ -212,6 +212,7 @@ def delete_badge(
             detail="Badge not found",
         )
 
+    db.query(UserBadge).filter(UserBadge.badge_id == badge_id).delete()
     db.delete(badge)
     db.commit()
     return {"message": "Badge deleted successfully"}

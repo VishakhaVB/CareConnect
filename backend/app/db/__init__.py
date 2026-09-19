@@ -1,11 +1,4 @@
 from app.db.base import Base
-from app.db.database import engine
+from app.db.database import SessionLocal, engine, get_db
 
-
-def init_db():
-    Base.metadata.create_all(bind=engine)
-    print("Database tables created successfully.")
-
-
-if __name__ == "__main__":
-    init_db()
+__all__ = ["Base", "engine", "SessionLocal", "get_db"]

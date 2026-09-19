@@ -11,14 +11,15 @@ def register_user(
     password: str,
     role: str,
 ):
-    existing_user = db.query(User).filter(User.email == email).first()
+    normalized_email = email.lower().strip()
+    existing_user = db.query(User).filter(User.email == normalized_email).first()
 
     if existing_user:
         return None
 
     user = User(
-        name=name,
-        email=email,
+        name=name.strip(),
+        email=normalized_email,
         password_hash=hash_password(password),
         role=role,
     )
@@ -35,7 +36,8 @@ def authenticate_user(
     email: str,
     password: str,
 ):
-    user = db.query(User).filter(User.email == email).first()
+    normalized_email = email.lower().strip()
+    user = db.query(User).filter(User.email == normalized_email).first()
 
     if not user:
         return None

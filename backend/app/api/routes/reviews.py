@@ -28,6 +28,12 @@ def create_review(
             detail="Orphanage not found",
         )
 
+    if orphanage.user_id == current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="You cannot review your own orphanage",
+        )
+
     existing = (
         db.query(Review)
         .filter(

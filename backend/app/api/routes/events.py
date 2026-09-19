@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.security import get_current_user, require_role, get_current_orphanage
+from app.core.security import get_current_orphanage, require_role
 from app.db.database import get_db
 from app.models.event import Event
 from app.models.event_participation import EventParticipation
@@ -45,7 +45,6 @@ def create_event(
 def list_events(
     status: str | None = None,
     orphanage_id: int | None = None,
-    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     query = db.query(Event)
@@ -76,7 +75,6 @@ def get_my_participations(
 @router.get("/{event_id}", response_model=EventResponse)
 def get_event(
     event_id: int,
-    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
     event = db.query(Event).filter(Event.id == event_id).first()
@@ -143,6 +141,7 @@ def delete_event(
             detail="You do not have permission to delete this event",
         )
 
+    db.query(EventParticipation).filter(EventParticipation.event_id == event_id).delete()
     db.delete(event)
     db.commit()
     return {"message": "Event deleted successfully"}

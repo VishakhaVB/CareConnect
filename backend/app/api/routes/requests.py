@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.security import get_current_orphanage
 from app.db.database import get_db
+from app.models.donation import Donation
 from app.models.orphanage import Orphanage
 from app.models.request import ItemRequest
 from app.schemas.request import (
@@ -137,6 +138,9 @@ def delete_item_request(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="You do not have permission to delete this request",
         )
+
+    # Unlink any existing donations from this request to preserve donation records
+    db.query(Donation).filter(Donation.request_id == item_request.id).update({Donation.request_id: None})
 
     db.delete(item_request)
     db.commit()

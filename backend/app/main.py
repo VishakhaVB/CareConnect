@@ -1,5 +1,7 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.config import settings
 from app.api.routes import (
     admin,
     auth,
@@ -11,7 +13,6 @@ from app.api.routes import (
     orphanages,
     requests,
     reviews,
-    test_roles,
     users,
     volunteers,
 )
@@ -22,7 +23,16 @@ app = FastAPI(
     description="Community Donation Platform API connecting donors, volunteers, and orphanages.",
 )
 
-# Register routers
+# Enable CORS for frontend integration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Register active routes
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(orphanages.router)
@@ -35,11 +45,17 @@ app.include_router(impact_stories.router)
 app.include_router(notifications.router)
 app.include_router(badges.router)
 app.include_router(admin.router)
-app.include_router(test_roles.router)
 
 
-@app.get("/")
+@app.get("/", tags=["System"])
 def root():
     return {
         "message": "CareConnect API is running"
+    }
+
+
+@app.get("/health", tags=["System"])
+def health():
+    return {
+        "status": "healthy"
     }
