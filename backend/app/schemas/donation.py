@@ -8,7 +8,7 @@ class DonationCreate(BaseModel):
     orphanage_id: int
     request_id: int | None = None
     donation_type: Literal["money", "item"]
-    amount: Decimal | None = Field(None, gt=0, decimal_places=2)
+    amount: Decimal | None = Field(None, gt=0)
     item_description: str | None = None
     quantity: int | None = Field(None, gt=0)
 
