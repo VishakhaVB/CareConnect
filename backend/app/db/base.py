@@ -11,3 +11,6 @@ from app.models.volunteer import Volunteer
 from app.models.request import ItemRequest
 from app.models.donation import Donation
 from app.models.donation_receipt import DonationReceipt
+from app.models.event import Event
+from app.models.event_participation import EventParticipation
+from app.models.review import Review
