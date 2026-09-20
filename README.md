@@ -11,7 +11,13 @@
 
 </div>
 
-🚧 **Active Development**
+## 🚀 Live Demo
+
+**Frontend:** https://careconnect-1-1d66.onrender.com
+
+**Backend API:** https://careconnect-fv9b.onrender.com
+
+**API Docs:** https://careconnect-fv9b.onrender.com/docs
 
 ---
 
