@@ -1,3 +1,5 @@
+<div align="center">
+
 # CareConnect
 
 **A community donation and volunteer coordination platform connecting care homes, donors, volunteers, and administrators through structured and transparent workflows.**
@@ -6,6 +8,8 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React_19-Frontend-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
+</div>
 
 🚧 **Active Development**
 
